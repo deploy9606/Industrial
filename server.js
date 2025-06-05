@@ -121,6 +121,7 @@ app.post('/proxy/openai', async (req, res) => {
       headers: { 'Authorization': `Bearer ${process.env.OPENAI_API_KEY}` },
     });
     res.json(response.data);
+    console.log(response.data);
   } catch (err) {
     res.status(500).json({ error: 'OpenAI proxy failed' });
   }
