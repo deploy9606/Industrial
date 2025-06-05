@@ -71,7 +71,7 @@
 
       const fetchChatGPT = async (query, propertyData) => {
         const marketData = { growthRate: 0.108, leaseRate: 1.00 };
-        const gapsResult = await fetchWithRetry('https://1d99-70-26-189-92.ngrok-free.app/gaps', {
+        const gapsResult = await fetchWithRetry('https://gap-server.onrender.com/gaps', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ query, propertyData, marketData }),

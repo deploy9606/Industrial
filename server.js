@@ -105,9 +105,9 @@ function generatePitch(gap, propertyData, marketData) {
 app.post('/gaps', async (req, res) => {
   try {
     const { query, propertyData, marketData } = req.body;
-    //const result = await detectOperationalGaps(query, propertyData, marketData);
-    const result = "W0rking";
-    console.log(result);
+    const result = await detectOperationalGaps(query, propertyData, marketData);
+    //const result = "W0rking";
+    //console.log(result);
     res.json(result);
   } catch (err) {
     res.status(500).json({ error: 'Gap detection failed' });
