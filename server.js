@@ -79,7 +79,7 @@ async function fetchMetrics(tenant) {
 }
 
 function hasFacilityWithinRadius(facilities, address, radius) {
-  return facilities.some(f => f.size >= minSqFt && f.distance <= radius[1]);
+  return facilities.some(f => f.size >= 10000 && f.distance <= radius[1]);
 }
 
 function estimateImpact(gap, metrics, marketData) {
