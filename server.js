@@ -138,6 +138,7 @@ app.post('/proxy/gemini', async (req, res) => {
     // const response = await axios.post('https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent?key=' + process.env.GEMINI_API_KEY, req.body);
     res.json(response.data);
   } catch (err) {
+    console.log('Gemini proxy error:', err);
     res.status(500).json({ error: 'Gemini proxy failed' });
   }
 });
