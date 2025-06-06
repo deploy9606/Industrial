@@ -52,7 +52,7 @@
           }
 
           // Auto-save to Google Docs
-          await fetch('http://localhost:3001/save-docs', {
+          await fetch('https://gap-server.onrender.com/save-docs', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -71,13 +71,13 @@
 
       const fetchChatGPT = async (query, propertyData) => {
         const marketData = { growthRate: 0.108, leaseRate: 1.00 };
-        const gapsResult = await fetchWithRetry('http://localhost:3001/gaps', {
+        const gapsResult = await fetchWithRetry('https://gap-server.onrender.com/gaps', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ query, propertyData, marketData }),
         }).then(res => res.json());
 
-        const response = await fetchWithRetry('http://localhost:3001/proxy/openai', {
+        const response = await fetchWithRetry('https://gap-server.onrender.com/proxy/openai', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -95,7 +95,7 @@
 
       const fetchGemini = async (query) => {
         //console.log('Fetching Gemini data for query:', query);
-        const response = await fetchWithRetry('http://localhost:3001/proxy/gemini', {
+        const response = await fetchWithRetry('https://gap-server.onrender.com/proxy/gemini', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({

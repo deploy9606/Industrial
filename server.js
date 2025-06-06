@@ -68,8 +68,25 @@ async function detectOperationalGaps(query, propertyData, marketData) {
 }
 
 // Mock tenant data fetch (replace with real APIs)
-async function fetchTenantFacilities(tenant, state) {
-  return [{ size: 20000, distance: 100 }];
+async function fetchTenantFacilities(tenant, address) {
+  const { lat, lng } = await geocodeAddress(address);
+
+  const res = await axios.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json', {
+    params: {
+      key: process.env.GOOGLE_API_KEY,
+      location: `${lat},${lng}`,
+      radius: 50000, // in meters (~30 miles)
+      keyword: tenant,
+      type: 'establishment',
+    }
+  });
+
+  return res.data.results.map(place => ({
+    name: place.name,
+    address: place.vicinity,
+    location: place.geometry.location,
+    distance: null // you can calculate this using Haversine formula if needed
+  }));
 }
 
 async function fetchOperationalNeeds(tenant) {
@@ -101,6 +118,19 @@ function generatePitch(gap, propertyData, marketData) {
            `Market Advantage: ${marketData.growthRate * 100}% growth, $${marketData.leaseRate}/sq ft. ` +
            `Call to Action: Contact 9606 Capital to lease.`
   };
+}
+
+async function geocodeAddress(address) {
+  const res = await axios.get('https://maps.googleapis.com/maps/api/geocode/json', {
+    params: {
+      address,
+      key: process.env.GOOGLE_API_KEY,
+    }
+  });
+
+  const location = res.data.results[0]?.geometry.location;
+  if (!location) throw new Error('Unable to geocode address');
+  return location; // { lat: ..., lng: ... }
 }
 
 // API endpoints
