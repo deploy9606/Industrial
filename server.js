@@ -5,7 +5,7 @@ const { GoogleGenAI } = require('@google/genai');
 const axios = require('axios');
 const app = express();
 app.use(express.json());
-const ai = new GoogleGenAI({apiKey: "AIzaSyDuAZBAiD56WjvoxwYkEo3fM2S2Y3TqWhc"});
+const ai = new GoogleGenAI({apiKey: process.env.GEMINI_API_KEY});
 // Load environment variables
 require('dotenv').config();
 const cors = require('cors');
@@ -14,7 +14,7 @@ app.use(cors());
 const oauth2Client = new google.auth.OAuth2(
   process.env.GOOGLE_CLIENT_ID,
   process.env.GOOGLE_CLIENT_SECRET,
-  'http://localhost:3001/auth/callback'
+  'http://localhost'
 );
 oauth2Client.setCredentials({ refresh_token: process.env.GOOGLE_REFRESH_TOKEN });
 const docs = google.docs({ version: 'v1', auth: oauth2Client });
@@ -132,11 +132,14 @@ app.post('/proxy/openai', async (req, res) => {
 
 app.post('/proxy/gemini', async (req, res) => {
   try {
+    
     const response = await ai.models.generateContent({
     model: "gemini-2.0-flash",
-    contents: req.body,});
+    contents: req.body.contents});
+    
     // const response = await axios.post('https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent?key=' + process.env.GEMINI_API_KEY, req.body);
-    res.json(response.data);
+    //console.log(response.text);
+    res.json(response);
   } catch (err) {
     console.log('Gemini proxy error:', err);
     res.status(500).json({ error: 'Gemini proxy failed' });
