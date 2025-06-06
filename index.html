@@ -94,7 +94,7 @@
       };
 
       const fetchGemini = async (query) => {
-        const response = await fetchWithRetry('https://gap-server.onrender.com/gemini', {
+        const response = await fetchWithRetry('https://gap-server.onrender.com/proxy/gemini', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({

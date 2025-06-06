@@ -1,9 +1,11 @@
 const express = require('express');
 const { google } = require('googleapis');
+const { GoogleGenAI } = require('@google/genai');
+
 const axios = require('axios');
 const app = express();
 app.use(express.json());
-
+const ai = new GoogleGenAI({apiKey: "AIzaSyDuAZBAiD56WjvoxwYkEo3fM2S2Y3TqWhc"});
 // Load environment variables
 require('dotenv').config();
 const cors = require('cors');
@@ -116,12 +118,13 @@ app.post('/gaps', async (req, res) => {
 
 app.post('/proxy/openai', async (req, res) => {
   try {
-    console.log('OpenAI request:', req.body);
+    res.json("kdkdkdkdkdkdkd");
     const response = await axios.post('https://api.openai.com/v1/chat/completions', req.body, {
       headers: { 'Authorization': `Bearer ${process.env.OPENAI_API_KEY}` },
     });
+
     res.json(response.data);
-    console.log(response.data);
+    
   } catch (err) {
     res.status(500).json({ error: 'OpenAI proxy failed' });
   }
