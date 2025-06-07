@@ -60,6 +60,7 @@ async function detectOperationalGaps(query, propertyData, marketData) {
     gaps.sort((a, b) => b.impact.severity - a.impact.severity);
     const summary = summarizeGaps(gaps);
     const pitches = gaps.map(gap => generatePitch(gap, propertyData, marketData));
+    console.log(pitches);
     return { gaps, summary, pitches };
   } catch (err) {
     console.error('Gap detection error:', err);
