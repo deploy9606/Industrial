@@ -31,7 +31,7 @@ async function detectOperationalGaps(query, propertyData, marketData) {
 
     for (const tenant of tenants) {
       const tenantData = {
-        facilities: await fetchTenantFacilities(tenant, '[STATE]'),
+        facilities: await fetchTenantFacilities(tenant, 'Illinois, USA'),
         needs: await fetchOperationalNeeds(tenant),
         metrics: await fetchMetrics(tenant),
       };
