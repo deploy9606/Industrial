@@ -107,7 +107,7 @@ class IndustrialDataService {
 				try {
 					const url = `${this.censusApiBase}/2022/cbp`;
 					const params = {
-						get: "EMP,PAYANN",
+						get: "EMP,ESTAB",
 						for: `state:${stateFips}`,
 						NAICS2017: `${naics}*`,
 						key: this.apiKey,
