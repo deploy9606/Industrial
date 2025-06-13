@@ -100,6 +100,7 @@ For each company, provide detailed AI-generated scoring:
   "tenants": [
     {
       "company": "Company Name",
+	  "contact_info" : "company website or linkedin. Source where you found this company",
       "nearbyLocation": "specific nearby site/facility (within ${Math.min(
 				300,
 				PROMPT_CONFIG.search_radius_miles
