@@ -20,6 +20,7 @@ const proxyRoutes = require("./routes/proxy");
 const tenantResearchRoutes = require("./routes/tenantResearch");
 const demographicsRoutes = require("./routes/demographics");
 const industrialRoutes = require("./routes/industrial");
+const buildingRateRoutes = require("./routes/buildingRate");
 
 // Créer l'application Express
 const app = express();
@@ -74,6 +75,7 @@ app.use("/proxy", proxyRoutes);
 app.use("/api/tenant-research", tenantResearchRoutes);
 app.use("/api/demographics", demographicsRoutes);
 app.use("/api/industrial", industrialRoutes);
+app.use("/api/building-rate", buildingRateRoutes);
 
 // Route de santé
 app.get("/health", (req, res, next) => {
