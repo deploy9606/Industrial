@@ -110,7 +110,7 @@ router.post("/analyze-9606", async (req, res, next) => {
 			tenantRanking: analysisResults.tenantRanking.map((tenant) => ({
 				// Informations de base de l'entreprise
 				company: tenant.company,
-				website: tenant.contact_info,
+				contact_info: tenant.contact_info,
 				operations: tenant.operations,
 				score: tenant.score || 50, // Score unifié qui remplace likelihood et globalScore
 
