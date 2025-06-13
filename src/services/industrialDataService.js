@@ -120,7 +120,6 @@ class IndustrialDataService {
 						results[naics] = {
 							employees: parseInt(data[0]) || 0,
 							establishments: parseInt(data[1]) || 0,
-							payroll: parseInt(data[2]) || 0,
 						};
 					}
 				} catch (err) {
@@ -143,7 +142,6 @@ class IndustrialDataService {
 			employees: (results["48"]?.employees || 0) + (results["49"]?.employees || 0),
 			establishments:
 				(results["48"]?.establishments || 0) + (results["49"]?.establishments || 0),
-			payroll: (results["48"]?.payroll || 0) + (results["49"]?.payroll || 0),
 		};
 
 		const manufacturing = {
@@ -155,29 +153,17 @@ class IndustrialDataService {
 				(results["31"]?.establishments || 0) +
 				(results["32"]?.establishments || 0) +
 				(results["33"]?.establishments || 0),
-			payroll:
-				(results["31"]?.payroll || 0) +
-				(results["32"]?.payroll || 0) +
-				(results["33"]?.payroll || 0),
 		};
 
 		const warehousing = {
 			employees: results["493"]?.employees || 0,
 			establishments: results["493"]?.establishments || 0,
-			payroll: results["493"]?.payroll || 0,
-		};
-
-		const trucking = {
-			employees: results["484"]?.employees || 0,
-			establishments: results["484"]?.establishments || 0,
-			payroll: results["484"]?.payroll || 0,
 		};
 
 		return {
 			transportation,
 			manufacturing,
 			warehousing,
-			trucking,
 		};
 	}
 
