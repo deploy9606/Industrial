@@ -1,14 +1,14 @@
 const express = require("express");
-const { estimateBuildingRate, estimateBuildingRateOpenAI } = require("../services/buildingRateService");
+const { getDevelopmentData} = require("../services/developmentDataService");
 const logger = require("../config/logger");
 
 const router = express.Router();
 
 /**
- * POST /api/building-rate/estimate
- * Estime le building rate basé sur l'adresse de la propriété
+ * GET /api/developmentData/:address
+ * 
  */
-router.post("/estimate-building", async (req, res) => {
+router.post("/", async (req, res) => {
 	try {
 		const { propertyAddress, propertyType, buildingSize } = req.body;
 
@@ -20,39 +20,34 @@ router.post("/estimate-building", async (req, res) => {
 			});
 		}
 
-		logger.info("Building rate estimation request", {
+		logger.info("Development Data request", {
 			propertyAddress,
 			propertyType,
 			buildingSize,
 		});
 
 		// Estimer le building rate
-		const estimation = await estimateBuildingRate(
+		const estimation = await getDevelopmentData(
 			propertyAddress,
 			propertyType,
 			buildingSize
 		);
-		const estimationOpenAI = await estimateBuildingRateOpenAI(
-			propertyAddress,
-			propertyType,
-			buildingSize
-		);	
+		
 
 		res.json({
 			success: true,
 			data: estimation,
-			dataOpenAI: estimationOpenAI,
 			timestamp: new Date().toISOString(),
 		});
-		console.log("FFF", estimation);
+		
 	} catch (error) {
-		logger.error("Building rate estimation failed", {
+		logger.error("Development data analysis failed", {
 			error: error.message,
 			stack: error.stack,
 		});
 
 		res.status(500).json({
-			error: "Error estimating building rate",
+			error: "Error Analyzing development data",
 			message: error.message,
 			code: "ESTIMATION_FAILED",
 		});
@@ -60,3 +55,6 @@ router.post("/estimate-building", async (req, res) => {
 });
 
 module.exports = router;
+
+
+

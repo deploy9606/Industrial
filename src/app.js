@@ -21,6 +21,11 @@ const tenantResearchRoutes = require("./routes/tenantResearch");
 const demographicsRoutes = require("./routes/demographics");
 const industrialRoutes = require("./routes/industrial");
 const buildingRateRoutes = require("./routes/buildingRate");
+const landRateRoutes = require("./routes/landRate");
+const marketDataRoutes = require("./routes/marketData");
+const marketOverviewRoutes = require("./routes/marketOverview");
+const developmentDataRoutes = require("./routes/developmentData");
+const investmentRecommendationRoutes = require("./routes/investmentRecommendation");
 
 // Créer l'application Express
 const app = express();
@@ -76,6 +81,11 @@ app.use("/api/tenant-research", tenantResearchRoutes);
 app.use("/api/demographics", demographicsRoutes);
 app.use("/api/industrial", industrialRoutes);
 app.use("/api/building-rate", buildingRateRoutes);
+app.use("/api/land-rate", landRateRoutes);
+app.use("/api/marketData", marketDataRoutes);
+app.use("/api/marketOverview", marketOverviewRoutes);
+app.use("/api/developmentData", developmentDataRoutes);
+app.use("/api/investment-recommendation", investmentRecommendationRoutes);
 
 // Route de santé
 app.get("/health", (req, res, next) => {

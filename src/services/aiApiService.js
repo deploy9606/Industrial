@@ -1,5 +1,5 @@
 const logger = require("../config/logger");
-const { callOpenAIDirect, callGeminiDirect } = require("../controllers/proxyController");
+const { callOpenAIDirect, callGeminiDirect, callClaudeDirect } = require("../controllers/proxyController");
 
 /**
  * Appel à OpenAI via le proxyController
@@ -9,7 +9,7 @@ const { callOpenAIDirect, callGeminiDirect } = require("../controllers/proxyCont
  */
 async function callOpenAI(prompt, options = {}) {
 	try {
-		const { model = "gpt-4o", maxTokens = 1500, temperature = 0.3 } = options;
+		const { model = "o3-pro", maxTokens = 1500, temperature = 0.3 } = options;
 
 		logger.info("Calling OpenAI API via proxyController", {
 			promptLength: prompt.length,
@@ -18,29 +18,30 @@ async function callOpenAI(prompt, options = {}) {
 
 		const requestBody = {
 			model,
-			messages: [
-				{
-					role: "system",
-					content:
-						"You are an expert industrial real estate analyst with deep knowledge of tenant requirements, market trends, and property valuation.",
-				},
+			input: [
+
 				{
 					role: "user",
 					content: prompt,
 				},
 			],
-			max_tokens: maxTokens,
-			temperature,
+			
+			
+
+
 		};
 
 		const response = await callOpenAIDirect(requestBody);
+		
 
-		const result = response?.choices?.[0]?.message?.content;
+		const result = response?.output?.[1]?.content?.[0]?.text;
+
+		
 
 		if (!result) {
-			throw new Error("No content received from OpenAI");
+			throw new Error("No content received from OpenAI" );
 		}
-
+		logger.info("OPENAID RESPONSE ", response);
 		logger.info("OpenAI API call successful", {
 			responseLength: result.length,
 		});
@@ -49,6 +50,7 @@ async function callOpenAI(prompt, options = {}) {
 	} catch (error) {
 		logger.error("OpenAI API call failed", {
 			error: error.message,
+			data: error.data
 		});
 
 		throw error;
@@ -141,8 +143,63 @@ async function callGemini(prompt, options = {}) {
 		throw error;
 	}
 }
+/**
+ * Call Claude via proxyController
+ */
+async function callClaude(prompt, options = {}) {
+	try {
+		const { model = "claude-opus-4-20250514", maxTokens = 15000, temperature = 0.3 } = options;
+
+		logger.info("Calling Claude API via proxyController", {
+			promptLength: prompt.length,
+			model,
+		});
+		console.log("Prompt sent to Claude:", prompt);
+
+		const requestBody = {
+			model,
+			max_tokens: maxTokens,
+			system:"You are a JSON API. You must respond only with valid JSON. Never include explanatory text outside the JSON structure.",
+			temperature,
+			messages: [
+				{
+					role: "user",
+					content: prompt,
+				},
+			],
+			
+			"tools": [{
+            "type": "web_search_20250305",
+            "name": "web_search",
+            "max_uses": 5
+        }]
+		};
+
+		const response = await callClaudeDirect(requestBody);
+		const result = response?.content?.[0]?.text || response?.content;
+
+		if (!result) {
+			throw new Error("No content received from Claude");
+		}
+
+		logger.info("Claude API call successful", {
+			responseLength: result.length,
+			model,
+		});
+
+		return result;
+	} catch (error) {
+		logger.error("Claude API call failed", {
+			error: error.message,
+			data: error.response?.data || {},
+		});
+		throw error;
+	}
+}
+
 
 module.exports = {
 	callOpenAI,
 	callGemini,
+	callClaude
 };
