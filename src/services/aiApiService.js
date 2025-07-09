@@ -9,8 +9,10 @@ const { callOpenAIDirect, callGeminiDirect, callClaudeDirect } = require("../con
  */
 async function callOpenAI(prompt, options = {}) {
 	try {
-		const { model = "o3-pro", maxTokens = 1500, temperature = 0.3 } = options;
-		console.log("options", options);
+
+		const { model = "o3-pro", maxTokens = 3000, temperature = 0.3 } = options;
+
+
 		logger.info("Calling OpenAI API via proxyController", {
 			promptLength: prompt.length,
 			model,
