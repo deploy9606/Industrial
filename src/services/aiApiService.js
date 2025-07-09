@@ -10,7 +10,7 @@ const { callOpenAIDirect, callGeminiDirect, callClaudeDirect } = require("../con
 async function callOpenAI(prompt, options = {}) {
 	try {
 		const { model = "o3-pro", maxTokens = 1500, temperature = 0.3 } = options;
-
+		console.log("options", options);
 		logger.info("Calling OpenAI API via proxyController", {
 			promptLength: prompt.length,
 			model,
@@ -148,7 +148,7 @@ async function callGemini(prompt, options = {}) {
  */
 async function callClaude(prompt, options = {}) {
 	try {
-		const { model = "claude-opus-4-20250514", maxTokens = 15000, temperature = 0.3 } = options;
+		const { model = "claude-opus-4-20250514", maxTokens = 9000, temperature = 0.3 } = options;
 
 		logger.info("Calling Claude API via proxyController", {
 			promptLength: prompt.length,

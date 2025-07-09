@@ -65,9 +65,9 @@ CONSTRAINTS:
 - Provide only the JSON, no additional text`;
 
         const responseGemini = await callGemini(prompt, {
-            maxOutputTokens: 2000,
+            maxOutputTokens: 10000,
             temperature: 0.3,
-            model: "gemini-2.0-flash",
+           
         });
 
         
