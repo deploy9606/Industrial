@@ -67,12 +67,15 @@ router.post("/analyze-9606", async (req, res, next) => {
 		if (finalSessionId) {
 			progressService.completeSession(finalSessionId, "analysis_complete");
 		}
+		if (!analysisResults.propertyAnalysis || !analysisResults.marketAnalysis) {
+  throw new Error("AI analysis returned incomplete data structure");
+}
 
 		// Format JSON structuré selon le prompt 9606 Capital et compatible avec le front-end
 		const structuredResponse = {
 			// Analyse de propriété pour compatibilité front-end
 			propertyAnalysis: {
-				configuration: analysisResults.propertyAnalysis.configuration,
+				configuration: analysisResults.propertyAnalysis.configuration || null,
 				marketFit:
 					analysisResults.propertyAnalysis.marketFit ||
 					"Propriété adaptée aux besoins industriels",

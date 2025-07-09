@@ -131,6 +131,7 @@ Ensure the output is in JSON format. Do not include any other text or explanatio
 		const response = await callOpenAI(prompt, {
 			temperature: 0.3,
 			maxTokens: 3000,
+			model: 'o3-mini',
 		});
 
 		const jsonMatch = response.match(/\{[\s\S]*\}/);

@@ -68,6 +68,7 @@ Provide realistic scores with variation between tenants. Be analytical and data-
 		const response = await callOpenAI(prompt, {
 			temperature: 0.3,
 			maxTokens: tenants.length * 200 + 500, // Ajuster en fonction du nombre de tenants
+			model: "o3-mini",
 		});
 
 		let aiScores;

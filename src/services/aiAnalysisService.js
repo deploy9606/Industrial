@@ -239,6 +239,7 @@ Focus on factors that would attract emerging, growing companies rather than larg
 	const response = await callOpenAI(prompt, {
 		temperature: 0.3,
 		maxTokens: 1000,
+		model: "o3-mini",
 	});
 
 	const jsonMatch = response.match(/\{[\s\S]*\}/);

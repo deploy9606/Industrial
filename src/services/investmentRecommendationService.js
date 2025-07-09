@@ -87,7 +87,7 @@ response with the json tag at the beginning and end of the response. Do not incl
 `;
 
 		const responseClaude = await callClaude(prompt, {
-			maxOutputTokens: 10000,
+			maxOutputTokens: 6000,
 			temperature: 0.3,
 			model: "claude-sonnet-4-20250514",
 		});
